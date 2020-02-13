@@ -10,7 +10,7 @@ Team of three:
 
 ## Project Description
 
-A dashboard of food and beverages to find the nutritional values per quantity. Compare with different food and bevevarages to see how they stack up with one another. Have a gauge to depict the daily value consumption.
+Our chosen topic shall be food and beverage information provided by the USDA Agricultural Research Service. The food and beverage dashboard shall give the user the option to search any food or beverage to their liking with the nutritional facts and graphical kcal macro and micro information. A comparison page shall be included were you can compare to different food/beverages and visually see the macro/micro nutritional differences. A gauge shall also display how much percentage your daily value is impacted based on the food/beverage and quantity selected (adding macros: carbs, protein, and fat and converting to calories).
 
 
 
