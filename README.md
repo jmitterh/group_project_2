@@ -24,8 +24,9 @@ To be determined
 
 ## Folder And File Description
 
-#### Repository description:
-1. To be determined
+#### Repository folder description:
+1. Initial Proposal - document of chosen topic, and mockup pdf and ppt.
+2. data - excel data from FNDDS source.
 
 
 #### Flask is used to connect to our database and create our pages:
