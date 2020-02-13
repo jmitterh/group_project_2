@@ -42,7 +42,7 @@ To be determined
 
 
 ## Sources
-* [***Food & Nutrition Database For Dietary Studies***](https://developer.adzuna.com/)
+* [***Food & Nutrition Database For Dietary Studies***](https://www.ars.usda.gov/northeast-area/beltsville-md-bhnrc/beltsville-human-nutrition-research-center/food-surveys-research-group/docs/fndds-download-databases/)
  FNDDS is a database that provides the nutrient values for foods and beverages reported in What We Eat in America, the dietary intake component of the National Health and Nutrition Examination Survey.
 
  * [***% Daily Value***](https://www.accessdata.fda.gov/scripts/InteractiveNutritionFactsLabel/pdv.html)
