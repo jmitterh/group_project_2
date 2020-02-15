@@ -1,0 +1,83 @@
+## url:https://app.quickdatabasediagrams.com/#/
+
+NutrientValue
+-
+food_code PK int
+main_food_description varchar
+wweia_category_code int
+wweia_category_description varchar
+energy_kcal decimal
+protein_g decimal
+carbohydrate_g decimal
+sugars_total_g decimal
+fiber_total_dietary_g decimal
+total_fat_g decimal
+fatty_acids_total_saturated_g decimal
+fatty_acids_total_monounsaturated_g decimal
+fatty_acids_total_polyunsaturated_g decimal
+cholesterol_mg decimal
+retinol_mcg decimal
+vitamin_a_rae_mcg_rae decimal
+carotene_alpha_mcg decimal
+carotene_beta_mcg decimal
+cryptoxanthin_beta_mcg decimal
+lycopene_mcg decimal
+lutein__zeaxanthin_mcg decimal
+thiamin_mg decimal
+riboflavin_mg decimal
+niacin_mg decimal
+vitamin_b6_mg decimal
+folic_acid_mcg decimal
+folate_food_mcg decimal
+folate_dfe_mcg_dfe decimal
+folate_total_mcg decimal
+choline_total_mg decimal
+vitamin_b12_mcg decimal
+vitamin_b12_added_mcg decimal
+vitamin_c_mg decimal
+vitamin_d_d2__d3_mcg decimal
+vitamin_e_alphatocopherol_mg decimal
+vitamin_e_added_mg decimal
+vitamin_k_phylloquinone_mcg decimal
+calcium_mg decimal
+phosphorus_mg decimal
+magnesium_mg decimal
+iron_mg decimal
+zinc_mg decimal
+copper_mg decimal
+selenium_mcg decimal
+potassium_mg decimal
+sodium_mg decimal
+caffeine_mg decimal
+theobromine_mg decimal
+alcohol_g decimal
+water_g decimal
+
+PortionsAndWeights
+-
+food_code int FK >- NutrientValue.food_code
+main_food_description varchar
+subcode int
+subcode_description varchar
+wweia_category_code int FK >- DescriptionCategory.wweia_category_code
+wweia_category_description varchar
+seq_num int
+portion_description varchar
+portion_weight_g decimal
+
+Category
+-
+category_num PK int
+category varchar
+
+DescriptionCategory
+-
+wweia_category_code int
+category_num int FK >- Category.category_num
+
+DailyValue
+-
+dv_id PK int
+category varchar
+unit varchar
+value_2000_cal decimal

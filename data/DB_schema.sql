@@ -2,6 +2,7 @@ Drop Table NutrientValue;
 Drop Table PortionsAndWeights;
 Drop Table Category;
 Drop Table DescriptionCategory;
+Drop Table DailyValue;
 
 CREATE TABLE NutrientValue (
     food_code int   NOT NULL,
@@ -80,6 +81,16 @@ CREATE TABLE Category (
 CREATE TABLE DescriptionCategory (
     wweia_category_code int   NOT NULL,
     category_num int   NOT NULL
+);
+
+CREATE TABLE DailyValue (
+    dv_id int   NOT NULL,
+    category varchar   NOT NULL,
+    unit varchar   NOT NULL,
+    value_2000_cal decimal   NOT NULL,
+    CONSTRAINT pk_DailyValue PRIMARY KEY (
+        dv_id
+     )
 );
 
 ALTER TABLE PortionsAndWeights ADD CONSTRAINT fk_PortionsAndWeights_food_code FOREIGN KEY(food_code)
