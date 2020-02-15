@@ -62,11 +62,9 @@ CREATE TABLE NutrientValue (
 CREATE TABLE PortionsAndWeights (
     food_code int   NOT NULL,
     main_food_description varchar   NOT NULL,
-    subcode int   NOT NULL,
-    subcode_description varchar   NOT NULL,
     wweia_category_code int   NOT NULL,
     wweia_category_description varchar   NOT NULL,
-    seq_num decimal   NOT NULL,
+    seq_num int   NOT NULL,
     portion_description varchar   NOT NULL,
     portion_weight_g decimal   NOT NULL
 );
