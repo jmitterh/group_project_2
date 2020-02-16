@@ -55,10 +55,9 @@ water_g decimal
 
 PortionsAndWeights
 -
+id_num PK int
 food_code int FK >- NutrientValue.food_code
 main_food_description varchar
-subcode int
-subcode_description varchar
 wweia_category_code int FK >- DescriptionCategory.wweia_category_code
 wweia_category_description varchar
 seq_num int
@@ -72,7 +71,7 @@ category varchar
 
 DescriptionCategory
 -
-wweia_category_code int
+wweia_category_code PK int
 category_num int FK >- Category.category_num
 
 DailyValue

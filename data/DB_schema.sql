@@ -61,13 +61,17 @@ CREATE TABLE NutrientValue (
 );
 
 CREATE TABLE PortionsAndWeights (
+	id_num int NOT NULL,
     food_code int   NOT NULL,
     main_food_description varchar   NOT NULL,
     wweia_category_code int   NOT NULL,
     wweia_category_description varchar   NOT NULL,
     seq_num int   NOT NULL,
     portion_description varchar   NOT NULL,
-    portion_weight_g decimal   NOT NULL
+    portion_weight_g decimal   NOT NULL,
+	CONSTRAINT pk_PortionsAndWeights PRIMARY KEY (
+    	id_num
+     )
 );
 
 CREATE TABLE Category (
@@ -80,8 +84,12 @@ CREATE TABLE Category (
 
 CREATE TABLE DescriptionCategory (
     wweia_category_code int   NOT NULL,
-    category_num int   NOT NULL
+    category_num int   NOT NULL,
+	    CONSTRAINT pk_DescriptionCategory PRIMARY KEY (
+        wweia_category_code
+     )
 );
+
 
 CREATE TABLE DailyValue (
     dv_id int   NOT NULL,
