@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Food and Beverage Comparison</title>
+    <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+            integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="row">
+
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('comparison') }}">Comparison</a></li>
+                    <!-- <li><a href="#">Contact</a></li> -->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">API Links <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ url_for('home') }}">Home</a></li>
+                            <li><a href="{{ url_for('comparison') }}">Comparison</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">API Links:</li>
+                            <li><a href="{{ url_for('nutrientvalue') }}"target="_blank">Nutrient Value</a></li>
+                            <li><a href="{{ url_for('portionsandweights') }}"target="_blank">Portionsand Weights</a></li>
+                            <li><a href="{{ url_for('descriptioncategory') }}"target="_blank">Description Category</a></li>
+                            <li><a href="{{ url_for('category') }}"target="_blank">Category</a></li>
+                            <li><a href="{{ url_for('dailyvalue') }}"target="_blank">% Daily Value</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="./">Default <span class="sr-only">(current)</span></a></li>
+                    <li><a href="../navbar-static-top/">Static top</a></li>
+                    <li><a href="../navbar-fixed-top/">Fixed top</a></li>
+                </ul> -->
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 jumbotron text-center">
+                <h1>Food and Beverage Comparison</h1>
+                <p>Use the interactive charts below to explore the dataset</p>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-3">
+
+                <div class="well">
+                    <h5>1.1 Select food:</h5>
+                    <select id="selDataset" onchange="optionCompareChanged(this.value)"></select>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="well">
+                    <h5>1.2 Select quantity:</h5>
+                    <select id="selDataset" onchange="optionCompareWeightChanged(this.value)"></select>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="well">
+                    <h5>2.1 Select food:</h5>
+                    <select id="selDataset" onchange="optionCompareChangedTwo(this.value)"></select>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="well">
+                    <h5>2.2 Select quantity:</h5>
+                    <select id="selDataset" onchange="optionCompareWeightChangedTwo(this.value)"></select>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-3">
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Nutrition Info</h3>
+                    </div>
+                    <!-- Panel of nutrion facts-->
+                    <div id="sample-metadata" class="panel-body"></div>
+                </div>
+
+            </div>
+
+            <div class="col-md-5">
+
+                <!-- Bar Graph for nurtion comparison-->
+                <div id="bar-macro-compare"></div>
+
+            </div>
+
+            <div class="col-md-4">
+                <!-- Bar Graph for nurtion comparison-->
+                <div id="bar-micro-compare"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="./static/js/app.js"></script>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
