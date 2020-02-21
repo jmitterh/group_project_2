@@ -66,13 +66,13 @@ def nutrientvalue():
 @app.route('/portionsandweights')
 def portionsandweights():
     sqlStatement = """
-    SELECT n.food_code, n.wweia_category_description, p.portion_description, p.portion_weight_g, n.energy_kcal, n.protein_g, n.carbohydrate_g, n.sugars_total_g, n.fiber_total_dietary_g, n.total_fat_g, n.fatty_acids_total_saturated_g, n.fatty_acids_total_monounsaturated_g, n.fatty_acids_total_polyunsaturated_g, n.cholesterol_mg, n.retinol_mcg, n.vitamin_a_rae_mcg_rae, n.carotene_alpha_mcg, n.carotene_beta_mcg, n.cryptoxanthin_beta_mcg, n.lycopene_mcg, n.lutein__zeaxanthin_mcg, n.thiamin_mg, n.riboflavin_mg, n.niacin_mg, n.vitamin_b6_mg, n.folic_acid_mcg, n.folate_food_mcg, n.folate_dfe_mcg_dfe, n.folate_total_mcg, n.choline_total_mg, n.vitamin_b12_mcg, n.vitamin_b12_added_mcg, n.vitamin_c_mg, n.vitamin_d_d2__d3_mcg, n.vitamin_e_alphatocopherol_mg, n.vitamin_e_added_mg, n.vitamin_k_phylloquinone_mcg, n.calcium_mg, n.phosphorus_mg, n.magnesium_mg, n.iron_mg, n.zinc_mg, n.copper_mg, n.selenium_mcg, n.potassium_mg, n.sodium_mg, n.caffeine_mg, n.theobromine_mg, n.alcohol_g, n.water_g
+    SELECT n.food_code, n.main_food_description, p.seq_num,p.portion_description, p.portion_weight_g, n.energy_kcal, n.protein_g, n.carbohydrate_g, n.sugars_total_g, n.fiber_total_dietary_g, n.total_fat_g, n.fatty_acids_total_saturated_g, n.fatty_acids_total_monounsaturated_g, n.fatty_acids_total_polyunsaturated_g, n.cholesterol_mg, n.retinol_mcg, n.vitamin_a_rae_mcg_rae, n.carotene_alpha_mcg, n.carotene_beta_mcg, n.cryptoxanthin_beta_mcg, n.lycopene_mcg, n.lutein__zeaxanthin_mcg, n.thiamin_mg, n.riboflavin_mg, n.niacin_mg, n.vitamin_b6_mg, n.folic_acid_mcg, n.folate_food_mcg, n.folate_dfe_mcg_dfe, n.folate_total_mcg, n.choline_total_mg, n.vitamin_b12_mcg, n.vitamin_b12_added_mcg, n.vitamin_c_mg, n.vitamin_d_d2__d3_mcg, n.vitamin_e_alphatocopherol_mg, n.vitamin_e_added_mg, n.vitamin_k_phylloquinone_mcg, n.calcium_mg, n.phosphorus_mg, n.magnesium_mg, n.iron_mg, n.zinc_mg, n.copper_mg, n.selenium_mcg, n.potassium_mg, n.sodium_mg, n.caffeine_mg, n.theobromine_mg, n.alcohol_g, n.water_g
     FROM nutrientvalue AS n 
     INNER JOIN portionsandweights AS p
     ON n.food_code = p.food_code
     
-    WHERE n.food_code BETWEEN 11000000 AND 13120120
-    ORDER BY wweia_category_description;
+    WHERE n.food_code BETWEEN 11000000	AND 13120120
+    ORDER BY main_food_description
     """
     df = pdsql.read_sql(sqlStatement, engine)
     df.set_index('food_code', inplace=True)
