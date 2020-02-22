@@ -93,7 +93,7 @@ function optionFoodChanged(select) {
         for (var i = 0; i < filterSelect.length; i++) {
             if (filterSelect[i].portion_description != 'Quantity not specified') {
                 select.innerHTML = select.innerHTML +
-                    '<option id="' + filterSelect[i].food_code + '" ' + 'option value="' + filterSelect[i].seq_num + '">' + filterSelect[i].portion_description + '</option>';
+                    '<option value="' + filterSelect[i].food_code +',' + filterSelect[i].seq_num + '">' + filterSelect[i].portion_description + '</option>';
             }
         }
         // default selection
@@ -109,6 +109,7 @@ function optionFoodChanged(select) {
 // GRAPH EXECUTION FUNCTION DEFINTION
 // Execute function for nutrient info, macro and micro graph, and gauge
 function optionWeightChanged(id, select) {
+    console.log("function optionWeight:",id,select)
     // Nutrient fact initiated
     nutrient_fact(id, select);
     // Macro Graph initiated
@@ -139,6 +140,7 @@ function nutrient_fact(id, select) {
     var id_num = id
     var sel = select
     d3.json("/portionsandweights").then((importData) => {
+        console.log("table::::",id_num,sel)
 
         // Searching food names through json
         var category = importData.data;
@@ -156,8 +158,14 @@ function nutrient_fact(id, select) {
         filterPortion = getFoodCodes.filter(data => data.seq_num == sel)
 
         //checking results
-        console.log("selected food id and portion size data for Table: ", filterPortion)
+        console.log("1. TABLE - id and seg_num: ", filterPortion)
 
+        //calculation of macro
+        // food = filterPortion[0]
+        // grams = food.portion_weight_g
+        // portion = food.portion_description
+        // foodName = food.main_food_description
+        // console.log(portion," is ",grams,"grams for ",foodName)
         // selecting tag for table id
         var select = document.getElementById("nutrient-panel");
 
@@ -190,7 +198,7 @@ function macro_graph(id, select) {
         filterPortion = getFoodCodes.filter(data => data.seq_num == sel)
 
         //checking results
-        console.log("selected food id and portion size data for Macro bargraph: ", filterPortion)
+        console.log("2. MACRO-BARGRAPH - id and seg_num: ", filterPortion)
 
         // selecting tag
         var select = document.getElementById("bar-macro");
@@ -224,7 +232,7 @@ function micro_graph(id, select) {
         filterPortion = getFoodCodes.filter(data => data.seq_num == sel)
 
         //checking results
-        console.log("selected food id and portion size data for Micro bargraph: ", filterPortion)
+        console.log("3. MICRO-BARGRAPH - id and seg_num: ", filterPortion)
 
         // selecting tag
         var select = document.getElementById("bar-micro");
@@ -260,7 +268,7 @@ function gauge(id, select) {
         filterPortion = getFoodCodes.filter(data => data.seq_num == sel)
 
         //checking results
-        console.log("selected food id and portion size data for Gauge: ", filterPortion)
+        console.log("4. GAUGE - id and seg_num: ", filterPortion)
 
         // selecting tag
         var select = document.getElementById("gauge");
@@ -288,7 +296,7 @@ function scatter(select) {
         getCategoryName = category.filter(data => data.category == sel);
 
         //Check to see what was filtered 
-        console.log("Filter for category Scatter Plot: ", getCategoryName)
+        console.log("5. SCATTER PLOT - category group: ", getCategoryName)
 
         // selecting tag
         var select = document.getElementById("optionScatterChanged");
