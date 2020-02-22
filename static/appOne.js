@@ -170,17 +170,17 @@ function nutrient_fact(id, select) {
                 portionSelection[i] = food[i];
             }
             else {
-                var calvalue = (food[i] * grams)/100
+                var calvalue = (food[i] * grams) / 100
                 portionSelection[i] = calvalue;
-            }       
+            }
         }
 
         // Data to use displayed on console
-        console.log("1. TABLE DATA: ",portionSelection)
+        console.log("1. TABLE DATA: ", portionSelection)
 
         // selecting tag for table id
-        var select = document.getElementById("nutrient-panel"); 
-        
+        var select = document.getElementById("nutrient-panel");
+
 
     })
 
@@ -225,12 +225,12 @@ function macro_graph(id, select) {
                 portionSelection[i] = food[i];
             }
             else {
-                var calvalue = (food[i] * grams)/100
+                var calvalue = (food[i] * grams) / 100
                 portionSelection[i] = calvalue;
-            }       
+            }
         }
         // Data to use displayed on console
-        console.log("2. MACRO BARGRAPH: ",portionSelection) 
+        console.log("2. MACRO BARGRAPH: ", portionSelection)
 
         // selecting tag
         var select = document.getElementById("bar-macro");
@@ -278,12 +278,12 @@ function micro_graph(id, select) {
                 portionSelection[i] = food[i];
             }
             else {
-                var calvalue = (food[i] * grams)/100
+                var calvalue = (food[i] * grams) / 100
                 portionSelection[i] = calvalue;
-            }       
+            }
         }
         // Data to use displayed on console
-        console.log("3. MICRO BARGRAPH: ",portionSelection) 
+        console.log("3. MICRO BARGRAPH: ", portionSelection)
 
         // selecting tag
         var select = document.getElementById("bar-micro");
@@ -331,15 +331,63 @@ function gauge(id, select) {
                 portionSelection[i] = food[i];
             }
             else {
-                var calvalue = (food[i] * grams)/100
+                var calvalue = (food[i] * grams) / 100
                 portionSelection[i] = calvalue;
-            }       
+            }
         }
         // Data to use displayed on console
-        console.log("4. GAUGE: ",portionSelection) 
+        console.log("4. GAUGE: food:", portionSelection.main_food_description, "kcals", portionSelection.energy_kcal)
 
         // selecting tag
         var select = document.getElementById("gauge");
+
+        // Variable for kcals
+        var kCals = portionSelection.energy_kcal;
+        // Variable for name
+        var fName = portionSelection.main_food_description
+
+        // data
+        var data = [
+            {
+                type: "indicator",
+                mode: "gauge+number",
+                value: kCals,// change value with washing freq
+                title: { text: `Calories for:\n ${fName}`, font: { size: 24 } },
+                gauge: {
+                    axis: { range: [0, 500], tickwidth: 1, tickcolor: "darkblue" },
+                    bar: { color: "darkblue" },
+                    bgcolor: "white",
+                    borderwidth: 3,
+                    bordercolor: "darkblue",
+                    steps: [
+                        { range: [0, 50], color: "#00cc00" },
+                        { range: [50, 100], color: "#33cc00" },
+                        { range: [100, 150], color: "#66cc00" },
+                        { range: [150, 200], color: "#99cc00" },
+                        { range: [200, 250], color: "#cccc00" },
+                        { range: [250, 300], color: "#cc9900" },
+                        { range: [300, 350], color: "#cc6600" },
+                        { range: [350, 400], color: "#cc3300" },
+                        { range: [400, 500], color: "#cc0000" }
+                    ],
+                    threshold: {
+                        line: { color: "cyan", width: 6 },
+                        thickness: 1.0,
+                        value: kCals
+                    }
+                }
+            }
+        ];
+        // App layout
+        var layout = {
+            width: 550,
+            height: 400,
+            margin: { t: 25, r: 25, l: 25, b: 25 },
+            paper_bgcolor: "white",
+            font: { color: "darkblue", family: "Arial" }
+        };
+        // Render the plot to the div tag with id "gauge"
+        Plotly.newPlot(select, data, layout);
 
     })
 };
@@ -366,7 +414,54 @@ function scatter(select) {
         console.log("5. SCATTER PLOT: ", getCategoryName)
 
         // selecting tag
-        var select = document.getElementById("optionScatterChanged");
+        var select = document.getElementById("scatter");
+
+        // varable for category name selected
+        var catName = getCategoryName[0].category
+
+        // Empty list for initiate
+        xVal = []
+        yVal = []
+        labals = []
+
+        // For loop to add variables to a list to initiate bubble graph
+        for (var i = 0; i < getCategoryName.length; i++) {
+            xVal.push(getCategoryName[i].energy_kcal)
+            yVal.push(getCategoryName[i].total_fat_g)
+            labals.push(getCategoryName[i].main_food_description)
+        }
+
+        // Build variables for Bubble Chart 
+        var xBubble = xVal;
+        var yBubble = yVal;
+        var bubbleLabel = labals;
+
+        var cSize = yVal;
+        var cColor = yVal;
+
+        // Trace is for the Bubble graph data
+        var trace = {
+            x: xBubble,
+            y: yBubble,
+            text: bubbleLabel,
+            mode: 'markers',
+            marker: {
+                size: cSize,
+                color: cColor
+            }
+        };
+
+        // data
+        var data = [trace];
+
+        // Apply layout
+        var layout = {
+            title: `Comparing ${catName} with Calories and Fat`,
+            xVal: "Fat"
+        };
+
+        // Render the plot to the div tag with id "bubble"
+        Plotly.newPlot(select, data, layout)
 
     })
 };
