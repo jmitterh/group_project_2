@@ -181,6 +181,19 @@ function nutrient_fact(id, select) {
         // selecting tag for table id
         var select = document.getElementById("nutrient-panel");
 
+        //************************** */
+        //Table display
+        var pbody = d3.select(".panel-body");
+        pbody.html("");
+    
+        //Loop through Nutrient array to find nutrient List
+        Object.entries(portionSelection).forEach(([key, value]) => {
+            var row = pbody.append("tr");
+            var cell = row.append("td");
+            var num = parseFloat(value).toFixed(2);
+            cell.text(`${key}: ${num}`);
+        });
+        //************************** */
 
     })
 
@@ -235,6 +248,74 @@ function macro_graph(id, select) {
         // selecting tag
         var select = document.getElementById("bar-macro");
 
+       // ********************************
+       //Empty array to store chart data
+       yBar = [];
+       xBar = [];
+       xAll = [];
+       string = {};
+   
+       // Iterate through object to alter object label and store into array
+       Object.entries(portionSelection).forEach(([key, value]) => {
+           var macroName = ['protein_g', 'carbohydrate_g', 'sugars_total_g', 'total_fat_g'];
+           if (macroName.indexOf(key) !== -1) {
+               var n = key.indexOf("_g");
+               var nSlice = key.slice(0, n)
+               var keyName = nSlice[0].toUpperCase() + nSlice.substring(1);
+               var numb = value;
+               numb = numb.toFixed(2); 
+
+               string = {type: keyName, amt: numb};
+               xAll.push(string);
+           }
+       });
+       
+       // Sort Object Array in Descending Order by Amount field
+       xAll.sort(function(a, b){return a.amt - b.amt});
+
+       // Chart Axis Arrays
+       yBar = xAll.map(arr => arr.type);
+       xBar = xAll.map(arr => arr.amt);
+
+       // Trace is for the Bar graph data
+       var trace = {
+           x: xBar,
+           y: yBar,
+           text: yBar,
+           name: "Grams",
+           type: "bar",
+           orientation: "h"
+           // marker: {
+           //     color: 'rgba(55,128,191,0.6)',
+           //     width: .5
+           //   }
+       };
+       // data
+       var data = [trace];
+       
+       // Apply layout
+       var layout = {
+           title: "Macro Nutrients",
+           xaxis: {
+               title: "Grams",
+               showgird: true,
+               range: [0, Math.max(xBar)+5],
+               domain: [0, 0.5]
+           },
+           margin: {
+               l: 200,
+               r: 10,
+               t: 50,
+               b: 120
+             },
+           width: 600,
+           height: 400
+       };
+       // Render the plot to the div tag with id "bar"
+       Plotly.newPlot("bar-macro", data, layout);
+       
+       //******************************** */
+
     })
 
 };
@@ -288,6 +369,77 @@ function micro_graph(id, select) {
         // selecting tag
         var select = document.getElementById("bar-micro");
 
+        // ******************************
+        //Empty array to store chart data
+        yBar = [];
+        xBar = [];
+        xAll = [];
+        string = {};
+    
+        // Iterate through object to alter object label and store into array
+        Object.entries(portionSelection).forEach(([key, value]) => {
+            var macroName = ['thiamin_mg', 'riboflavin_mg', 'niacin_mg', 'vitamin_b6_mg', 'folic_acid_mcg',
+                             'folate_total_mcg', 'choline_total_mg', 'vitamin_b12_mcg', 'vitamin_c_mg',
+                             'vitamin_d_d2__d3_mcg', 'vitamin_e_alphatocopherol_mg', 'vitamin_k_phylloquinone_mcg',
+                             'calcium_mg', 'phosphorus_mg', 'magnesium_mg', 'iron_mg', 'zinc_mg', 'copper_mg',
+                             'selenium_mcg', 'potassium_mg', 'sodium_mg', 'caffeine_mg', 'theobromine_mg',
+                             'alcohol_g', 'water_g'];
+            if (macroName.indexOf(key) !== -1) {
+                if (value > 0) {
+                    var n = key.indexOf("_m");
+                    var nSlice = key.slice(0, n)
+                    var keyName = nSlice[0].toUpperCase() + nSlice.substring(1);
+                    var numm = value;
+                    numm = parseFloat(value).toFixed(2);
+
+                    string = {type: keyName, amt: numm};
+                    xAll.push(string);
+                }
+            }
+        });
+        
+        // Sort Object Array in Descending Order by Amount field
+        xAll.sort(function(a, b){return a.amt - b.amt});
+
+        // Chart Axis Arrays top 10 Nutirients
+        yBar = xAll.slice(0,10).map(arr => arr.type);
+        xBar = xAll.slice(0,10).map(arr => arr.amt);
+
+        // Trace is for the Bar graph data
+        var trace = {
+            x: xBar,
+            y: yBar,
+            text: yBar,
+            name: "Grams",
+            type: "bar",
+            orientation: "h"
+        };
+        // data
+        var data = [trace];
+        
+        // Apply layout
+        var layout = {
+            title: "Micro Nutrients",
+            xaxis: {
+                // title: "Grams",
+                showgird: true,
+                range: [0, Math.max(xBar)+5],
+                domain: [0, 0.5]
+            },
+            margin: {
+                l: 200,
+                r: 10,
+                t: 50,
+                b: 50
+              },
+            width: 600,
+            height: 400
+        };
+
+        // Render the plot to the div tag with id "bar"
+        Plotly.newPlot("bar-micro", data, layout);
+
+        //****************************** */
     })
 
 };
