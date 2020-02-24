@@ -289,10 +289,6 @@ function macro_graph(id, select) {
             name: "Grams",
             type: "bar",
             orientation: "h"
-            // marker: {
-            //     color: 'rgba(55,128,191,0.6)',
-            //     width: .5
-            //   }
         };
         // data
         var data = [trace];
@@ -300,19 +296,24 @@ function macro_graph(id, select) {
         // Apply layout
         var layout = {
             title: "Macro Nutrients",
+            titlefont: {size: 20, color: "darkblue"},
             xaxis: {
                 title: "Grams",
+                titlefont: {size: 14, color: "darkblue"},
                 showgird: true,
-                range: [0, Math.max(xBar) + 5],
-                domain: [0, 0.5]
+                showline: true,
+                linewidth: 2,
+                autorange: true
             },
-            margin: {
-                l: 200,
-                r: 10,
-                t: 50,
-                b: 120
+            yaxis: {
+                showgird: true,
+                showline: true,
+                linewidth: 2,
+                autorange: true,
+                tickfont: {size: 14}
             },
-            width: 600,
+            margin: {l: 120, r: 80, t: 60, b: 100 },
+            width: 500,
             height: 400
         };
         // Render the plot to the div tag with id "bar"
@@ -393,6 +394,9 @@ function micro_graph(id, select) {
                     var n = key.indexOf("_m");
                     var nSlice = key.slice(0, n)
                     var keyName = nSlice[0].toUpperCase() + nSlice.substring(1);
+                    if (keyName == "Vitamin_d_d2__d3") {keyName = "Vitamin_d's";}
+                    if (keyName == "Vitamin_e_alphatocopherol") {keyName = "Vitamin_e_alpha";}
+                    if (keyName == "Vitamin_k_phylloquinone") {keyName = "Vitamin_k_phyllo";}
                     var numm = value;
                     numm = parseFloat(value).toFixed(2);
 
@@ -424,19 +428,24 @@ function micro_graph(id, select) {
         // Apply layout
         var layout = {
             title: "Micro Nutrients",
+            titlefont: {size: 20, color: "darkblue"},
             xaxis: {
-                // title: "Grams",
+                title: "Grams",
+                titlefont: {size: 14, color: "darkblue"},
                 showgird: true,
-                range: [0, Math.max(xBar) + 5],
-                domain: [0, 0.5]
+                showline: true,
+                linewidth: 2,
+                autorange: true,
             },
-            margin: {
-                l: 200,
-                r: 10,
-                t: 50,
-                b: 50
+            yaxis: {
+                showgird: true,
+                showline: true,
+                linewidth: 2,
+                autorange: true,
+                tickfont: {size: 14}
             },
-            width: 600,
+            margin: {l: 125, r: 10, t: 50, b: 100 },
+            width: 500,
             height: 400
         };
 
