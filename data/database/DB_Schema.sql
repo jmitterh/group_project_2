@@ -1,8 +1,8 @@
-Drop Table NutrientValue;
 Drop Table PortionsAndWeights;
-Drop Table Category;
 Drop Table DescriptionCategory;
 Drop Table DailyValue;
+Drop Table NutrientValue;
+Drop Table Category;
 
 CREATE TABLE NutrientValue (
     food_code int   NOT NULL,

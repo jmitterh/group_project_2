@@ -188,9 +188,14 @@ function nutrient_fact(id, select) {
 
         //Loop through Nutrient array to find nutrient List
         Object.entries(portionSelection).forEach(([key, value]) => {
-            var num = parseFloat(value).toFixed(2)
-            select.innerHTML = select.innerHTML +
-                '<li class="list-group-item">' + key + ': ' + num + '</li>';
+            if (key !== 'food_code' && key !== 'main_food_description' && key !== 'seq_num' && key !== 'portion_description') {
+                // Removing underscores
+                newKey = key.replace(/_/g, " ")
+                var num = parseFloat(value).toFixed(2)
+                select.innerHTML = select.innerHTML +
+                    '<li class="list-group-item text-capitalize font-italic">' + newKey + ':    '+ num + '</li>';
+            }
+
         });
         //************************** */
 
@@ -259,8 +264,9 @@ function macro_graph(id, select) {
             var macroName = ['protein_g', 'carbohydrate_g', 'sugars_total_g', 'total_fat_g'];
             if (macroName.indexOf(key) !== -1) {
                 var n = key.indexOf("_g");
-                var nSlice = key.slice(0, n)
+                var nSlice = key.slice(0, n);
                 var keyName = nSlice[0].toUpperCase() + nSlice.substring(1);
+                keyName = keyName.replace(/_/g, " ");
                 var numb = value;
                 numb = numb.toFixed(2);
 
@@ -283,7 +289,10 @@ function macro_graph(id, select) {
             text: yBar,
             name: "Grams",
             type: "bar",
-            orientation: "h"
+            orientation: "h",
+            marker: {
+                color: '#009966'
+              }
         };
         // data
         var data = [trace];
@@ -291,10 +300,10 @@ function macro_graph(id, select) {
         // Apply layout
         var layout = {
             title: "Macro Nutrients",
-            titlefont: {size: 20, color: "darkblue"},
+            titlefont: { size: 20, color: "darkblue" },
             xaxis: {
                 title: "Grams",
-                titlefont: {size: 14, color: "darkblue"},
+                titlefont: { size: 14, color: "darkblue" },
                 showgird: true,
                 showline: true,
                 linewidth: 2,
@@ -305,9 +314,9 @@ function macro_graph(id, select) {
                 showline: true,
                 linewidth: 2,
                 autorange: true,
-                tickfont: {size: 14}
+                tickfont: { size: 14 }
             },
-            margin: {l: 120, r: 80, t: 60, b: 100 },
+            margin: { l: 120, r: 80, t: 60, b: 100 },
             width: 500,
             height: 400
         };
@@ -389,9 +398,10 @@ function micro_graph(id, select) {
                     var n = key.indexOf("_m");
                     var nSlice = key.slice(0, n)
                     var keyName = nSlice[0].toUpperCase() + nSlice.substring(1);
-                    if (keyName == "Vitamin_d_d2__d3") {keyName = "Vitamin_d's";}
-                    if (keyName == "Vitamin_e_alphatocopherol") {keyName = "Vitamin_e_alpha";}
-                    if (keyName == "Vitamin_k_phylloquinone") {keyName = "Vitamin_k_phyllo";}
+                    if (keyName == "Vitamin_d_d2__d3") { keyName = "Vitamin_d's"; }
+                    if (keyName == "Vitamin_e_alphatocopherol") { keyName = "Vitamin_e_alpha"; }
+                    if (keyName == "Vitamin_k_phylloquinone") { keyName = "Vitamin_k_phyllo"; }
+                    keyName = keyName.replace(/_/g, " ");
                     var numm = value;
                     numm = parseFloat(value).toFixed(2);
 
@@ -415,7 +425,10 @@ function micro_graph(id, select) {
             text: yBar,
             name: "Grams",
             type: "bar",
-            orientation: "h"
+            orientation: "h",
+            marker: {
+                color: '#009966'
+              }
         };
         // data
         var data = [trace];
@@ -423,10 +436,10 @@ function micro_graph(id, select) {
         // Apply layout
         var layout = {
             title: "Micro Nutrients",
-            titlefont: {size: 20, color: "darkblue"},
+            titlefont: { size: 20, color: "darkblue" },
             xaxis: {
-                title: "Grams",
-                titlefont: {size: 14, color: "darkblue"},
+                title: "Milligram",
+                titlefont: { size: 14, color: "darkblue" },
                 showgird: true,
                 showline: true,
                 linewidth: 2,
@@ -437,9 +450,9 @@ function micro_graph(id, select) {
                 showline: true,
                 linewidth: 2,
                 autorange: true,
-                tickfont: {size: 14}
+                tickfont: { size: 14 }
             },
-            margin: {l: 125, r: 10, t: 50, b: 100 },
+            margin: { l: 125, r: 10, t: 50, b: 100 },
             width: 500,
             height: 400
         };
@@ -512,7 +525,7 @@ function gauge(id, select) {
                 type: "indicator",
                 mode: "gauge+number",
                 value: kCals,// change value with washing freq
-                title: { text: `Calories for:\n ${fName}`, font: { size: 24 } },
+                title: { text: `Calories: ${fName}`, font: { size: 18 } },
                 gauge: {
                     axis: { range: [0, 500], tickwidth: 1, tickcolor: "darkblue" },
                     bar: { color: "darkblue" },
@@ -540,9 +553,9 @@ function gauge(id, select) {
         ];
         // App layout
         var layout = {
-            width: 550,
-            height: 400,
-            margin: { t: 25, r: 25, l: 25, b: 25 },
+            width: 600,
+            height: 500,
+            margin: { t: 40, r: 40, l: 40, b: 40 },
             paper_bgcolor: "white",
             font: { color: "darkblue", family: "Arial" }
         };
@@ -607,7 +620,8 @@ function scatter(select) {
             mode: 'markers',
             marker: {
                 size: cSize,
-                color: cColor
+                // color: cColor
+                color: xVal
             }
         };
 
@@ -616,8 +630,11 @@ function scatter(select) {
 
         // Apply layout
         var layout = {
+            width: 1200,
+            height: 700,
             title: `Comparing ${catName} with Calories and Fat`,
-            xVal: "Fat"
+            xaxis: {title: "Calories"},
+            yaxis: {title: "Fat in grams"},
         };
 
         // Render the plot to the div tag with id "bubble"
