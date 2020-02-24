@@ -182,18 +182,13 @@ function nutrient_fact(id, select) {
         var select = document.getElementById("nutrient-panel");
 
         //************************** */
-        //Table display
-        // var pbody = d3.select(select);
-        // pbody.html("");
-        select.html = "";
+
+        //Clear dropdown
+        select.innerHTML = "";
 
         //Loop through Nutrient array to find nutrient List
         Object.entries(portionSelection).forEach(([key, value]) => {
-            // var row = pbody.append('li');
-            // var cell = row.append("td");
-            var num = parseFloat(value).toFixed(2);
-            // row.text(`${key}: ${num}`);
-
+            var num = parseFloat(value).toFixed(2)
             select.innerHTML = select.innerHTML +
                 '<li class="list-group-item">' + key + ': ' + num + '</li>';
         });
