@@ -13,7 +13,7 @@ function selectInit() {
 
         // Dropdown list
         for (var i = 0; i < names.length; i++) {
-            console.log("Loading name dropdown. Give it time!")
+            console.log("Loading food name dropdown. Give it time!")
             select.innerHTML = select.innerHTML +
                 '<option value="' + names[i].food_code + '">' + names[i].main_food_description + '</option>';
         }
@@ -117,6 +117,10 @@ function optionWeightChanged(id, select) {
     micro_graph(id, select);
     // Gauge initiated
     gauge(id, select);
+    // macro Radar initiated
+    macroRadar(id, select);
+    // micro Radar initiated
+    microRadar(id, select);
 
 };
 
@@ -175,9 +179,6 @@ function nutrient_fact(id, select) {
             }
         }
 
-        // Data to use displayed on console
-        console.log("1. TABLE DATA: ", portionSelection)
-
         // selecting tag for table id
         var select = document.getElementById("nutrient-panel");
 
@@ -193,7 +194,7 @@ function nutrient_fact(id, select) {
                 newKey = key.replace(/_/g, " ")
                 var num = parseFloat(value).toFixed(2)
                 select.innerHTML = select.innerHTML +
-                    '<li class="list-group-item text-capitalize font-italic">' + newKey + ':    '+ num + '</li>';
+                    '<li class="list-group-item text-capitalize font-italic">' + newKey + ':    ' + num + '</li>';
             }
 
         });
@@ -246,8 +247,6 @@ function macro_graph(id, select) {
                 portionSelection[i] = calvalue;
             }
         }
-        // Data to use displayed on console
-        console.log("2. MACRO BARGRAPH: ", portionSelection)
 
         // selecting tag
         var select = document.getElementById("bar-macro");
@@ -292,7 +291,7 @@ function macro_graph(id, select) {
             orientation: "h",
             marker: {
                 color: '#009966'
-              }
+            }
         };
         // data
         var data = [trace];
@@ -328,7 +327,6 @@ function macro_graph(id, select) {
     })
 
 };
-
 
 
 // 3. MICRO BAR GRAPH
@@ -372,8 +370,6 @@ function micro_graph(id, select) {
                 portionSelection[i] = calvalue;
             }
         }
-        // Data to use displayed on console
-        console.log("3. MICRO BARGRAPH: ", portionSelection)
 
         // selecting tag
         var select = document.getElementById("bar-micro");
@@ -415,8 +411,8 @@ function micro_graph(id, select) {
         xAll.sort(function (a, b) { return a.amt - b.amt });
 
         // Chart Axis Arrays top 10 Nutirients
-        yBar = xAll.slice(0, 10).map(arr => arr.type);
-        xBar = xAll.slice(0, 10).map(arr => arr.amt);
+        yBar = xAll.slice(10, 19).map(arr => arr.type);
+        xBar = xAll.slice(10, 19).map(arr => arr.amt);
 
         // Trace is for the Bar graph data
         var trace = {
@@ -428,7 +424,7 @@ function micro_graph(id, select) {
             orientation: "h",
             marker: {
                 color: '#009966'
-              }
+            }
         };
         // data
         var data = [trace];
@@ -464,7 +460,6 @@ function micro_graph(id, select) {
     })
 
 };
-
 
 
 // 4. GAUGE
@@ -508,8 +503,6 @@ function gauge(id, select) {
                 portionSelection[i] = calvalue;
             }
         }
-        // Data to use displayed on console
-        console.log("4. GAUGE: food:", portionSelection.main_food_description, "kcals", portionSelection.energy_kcal)
 
         // selecting tag
         var select = document.getElementById("gauge");
@@ -566,7 +559,6 @@ function gauge(id, select) {
 };
 
 
-
 // 5. SCATTER PLOT
 // Category scatter of all the fats, protein, and carbs; compared with kcal
 function scatter(select) {
@@ -575,16 +567,12 @@ function scatter(select) {
 
         // Searching food names through json
         var category = importData.data;
-        //console.log("scatter plot data", category)
 
         // Empty list to store food_code data
         getCategoryName = []
 
         // Use filter() to pass selection as an argument for the specific category
         getCategoryName = category.filter(data => data.category == sel);
-
-        // Data to use displayed on console
-        console.log("5. SCATTER PLOT: ", getCategoryName)
 
         // selecting tag
         var select = document.getElementById("scatter");
@@ -594,47 +582,91 @@ function scatter(select) {
 
         // Empty list for initiate
         xVal = []
-        yVal = []
+        yVal_1 = []
+        yVal_2 = []
+        yVal_3 = []
+        yVal_4 = []
         labals = []
-
         // For loop to add variables to a list to initiate bubble graph
         for (var i = 0; i < getCategoryName.length; i++) {
             xVal.push(getCategoryName[i].energy_kcal)
-            yVal.push(getCategoryName[i].total_fat_g)
+            yVal_1.push(getCategoryName[i].total_fat_g)
+            yVal_2.push(getCategoryName[i].protein_g)
+            yVal_3.push(getCategoryName[i].sugars_total_g)
+            yVal_4.push(getCategoryName[i].carbohydrate_g)
             labals.push(getCategoryName[i].main_food_description)
         }
-
         // Build variables for Bubble Chart 
         var xBubble = xVal;
-        var yBubble = yVal;
+        var yBubble_1 = yVal_1;
+        var yBubble_2 = yVal_2;
+        var yBubble_3 = yVal_3;
+        var yBubble_4 = yVal_4;
         var bubbleLabel = labals;
-
-        var cSize = yVal;
-        var cColor = yVal;
+        var cSize_1 = yVal_1;
+        var cSize_2 = yVal_2;
+        var cSize_3 = yVal_3;
 
         // Trace is for the Bubble graph data
-        var trace = {
+        var trace_1 = {
             x: xBubble,
-            y: yBubble,
+            y: yBubble_1,
             text: bubbleLabel,
             mode: 'markers',
             marker: {
-                size: cSize,
-                // color: cColor
-                color: xVal
-            }
+                size: cSize_1,
+                // Using defualt colors = color: yvalue or xvalue
+
+            },
+            name: 'Total Fats VS Calories',
+
+        };
+        var trace_2 = {
+            x: xBubble,
+            y: yBubble_2,
+            text: bubbleLabel,
+            mode: 'markers',
+            marker: {
+                size: cSize_2,
+                // Using defualt colors
+            },
+            name: 'Proteins VS Calories'
+        };
+        var trace_3 = {
+            x: xBubble,
+            y: yBubble_3,
+            text: bubbleLabel,
+            mode: 'markers',
+            marker: {
+                size: cSize_3,
+                // Using defualt colors
+
+            },
+            name: 'Total Sugars VS Calories'
+        };
+        var trace_4 = {
+            x: xBubble,
+            y: yBubble_4,
+            text: bubbleLabel,
+            mode: 'markers',
+            marker: {
+                size: cSize_3,
+                // Using defualt colors
+
+            },
+            name: 'Carbohydrates VS Calories'
         };
 
         // data
-        var data = [trace];
+        var data = [trace_1, trace_2, trace_3, trace_4];
 
         // Apply layout
         var layout = {
             width: 1200,
             height: 700,
-            title: `Comparing ${catName} with Calories and Fat`,
-            xaxis: {title: "Calories"},
-            yaxis: {title: "Fat in grams"},
+            title: `Comparing ${catName} products to find the relationship of Calories to Fats, Proteins, Total Sugars, and Carbohydrates`,
+            xaxis: { title: "Calories" },
+            yaxis: { title: "Grams" },
         };
 
         // Render the plot to the div tag with id "bubble"
@@ -644,10 +676,9 @@ function scatter(select) {
 };
 
 
-
-// 6. CHART GRAPH
+// 6. MACRO RADAR CHARTGRAPH
 // Another chart displaying the items using the chart library
-function chart(select) {
+function macroRadar(id, select) {
     //Rename variables
     var id_num = id
     var sel = select
@@ -686,11 +717,174 @@ function chart(select) {
                 portionSelection[i] = calvalue;
             }
         }
-        // Data to use displayed on console
-        console.log("6. CHART: ", portionSelection.main_food_description, "kcals", portionSelection.energy_kcal)
+
+        //name of food
+        foodName = portionSelection.main_food_description
+
+
+        //Empty list for radar graph
+        labels = [];
+        data = []
+        for (i in portionSelection) {
+            if (i == 'total_fat_g' || i == 'fatty_acids_total_saturated_g' || i == 'fatty_acids_total_monounsaturated_g' || i == 'fatty_acids_total_polyunsaturated_g' || i == 'protein_g' || i == 'carbohydrate_g' || i == 'sugars_total_g' || i == 'fiber_total_dietary_g') {
+                var n = i.replace(/_g/g,"")
+                var newI = n.replace(/_/g, " ")
+                var num = parseFloat(portionSelection[i]).toFixed(2)
+                labels.push(newI);
+                data.push(num);
+            }
+        };
 
         // selecting tag
-        var select = document.getElementById("chart");
+        var select = document.getElementById("marco-radar");
+
+        var myRadarChart = new Chart(select, {
+            type: 'radar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: `${foodName}`,
+                    data: data,
+                    backgroundColor: "rgba(255, 99, 132, 0.2)",
+                    borderColor: "rgb(255, 99, 132)",
+                    pointBackgroundColor: "rgb(255, 99, 132)",
+                    pointBorderColor: "#fff",
+                    pointHoverBackgroundColor: "#fff",
+                    pointHoverBorderColor: "rgb(255, 99, 132)"
+                }]
+            },
+            option: options = {
+                scale: {
+                    angleLines: {
+                        display: false
+                        // display: true,
+                        // text: `Distribution in grams for ${foodName}`
+                    },
+                    ticks: {
+                        suggestedMin: 50,
+                        suggestedMax: 100
+                    }
+                },
+            },
+
+        });
+
+    })
+};
+
+
+// 7. MICRO RADAR CHARTGRAPH
+function microRadar(id, select) {
+    //Rename variables
+    var id_num = id
+    var sel = select
+    d3.json("/portionsandweights").then((importData) => {
+
+        // Searching food names through json
+        var category = importData.data;
+
+        // Empty list to store food_code data
+        getFoodCodes = []
+
+        // Use filter() to pass selection as an argument for the food_code
+        getFoodCodes = category.filter(data => data.food_code == id_num);
+
+        // empty list to get portions of food code
+        var filterPortion = []
+
+        // Using filter to pass sequence number selection
+        filterPortion = getFoodCodes.filter(data => data.seq_num == sel)
+
+        //calculation of attributes
+        food = filterPortion[0]
+        // Grams to use in our calculation
+        grams = food.portion_weight_g
+
+
+
+        // Empty object
+        portionSelection = {}
+
+        // For loop to run the calculation of portion size
+        for (i in food) {
+            if (i == 'food_code' || i == 'main_food_description' || i == 'seq_num' || i == 'portion_description' || i == 'portion_weight_g') {
+                portionSelection[i] = food[i];
+            }
+            else {
+                var calvalue = (food[i] * grams) / 100
+                portionSelection[i] = calvalue;
+            }
+        }
+
+        // selecting tag
+        var select = document.getElementById("micro-radar");
+
+        // 
+        foodName = portionSelection.main_food_description
+
+        //Empty list for radar graph
+        labels = [];
+        data = []
+
+        Object.entries(portionSelection).forEach(([key, value]) => {
+            var macroName = ['thiamin_mg', 'riboflavin_mg', 'niacin_mg', 'vitamin_b6_mg', 'folic_acid_mcg',
+                'folate_total_mcg', 'choline_total_mg', 'vitamin_b12_mcg', 'vitamin_c_mg',
+                'vitamin_d_d2__d3_mcg', 'vitamin_e_alphatocopherol_mg', 'vitamin_k_phylloquinone_mcg',
+                'calcium_mg', 'phosphorus_mg', 'magnesium_mg', 'iron_mg', 'zinc_mg', 'copper_mg',
+                'selenium_mcg', 'potassium_mg', 'sodium_mg', 'caffeine_mg', 'theobromine_mg',
+                'alcohol_g', 'water_g'];
+            if (macroName.indexOf(key) !== -1) {
+                if (value > 0) {
+                    var n = key.indexOf("_m");
+                    var nSlice = key.slice(0, n)
+                    // var keyName = nSlice[0].toUpperCase() + nSlice.substring(1);
+                    var keyName = nSlice;
+                    if (keyName == "vitamin_d_d2__d3") { keyName = "vitamin_d's"; }
+                    if (keyName == "vitamin_e_alphatocopherol") { keyName = "vitamin_e_alpha"; }
+                    if (keyName == "vitamin_k_phylloquinone") { keyName = "vitamin_k_phyllo"; }
+                    keyName = keyName.replace(/_/g, " ");
+                    var numm = value;
+                    numm = parseFloat(value).toFixed(2);
+                    labels.push(keyName);
+                    data.push(numm);
+                }
+            }
+        });
+
+        // selecting tag
+        var select = document.getElementById("micro-radar");
+
+        var myRadarChart = new Chart(select, {
+            type: 'radar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: `${foodName}`,
+                    data: data,
+                    backgroundColor: "rgba(54, 162, 235, 0.2)",
+                    borderColor: "rgb(54, 162, 235)",
+                    pointBackgroundColor: "rgb(54, 162, 235)",
+                    pointBorderColor: "#fff",
+                    pointHoverBackgroundColor: "#fff",
+                    pointHoverBorderColor: "rgb(54, 162, 235)"
+                }]
+            },
+            option: options = {
+                scale: {
+                    angleLines: {
+                        display: false
+                        // display: true,
+                        // text: `Distribution in grams for ${foodName}`
+                    },
+                    ticks: {
+                        suggestedMin: 50,
+                        suggestedMax: 100
+                    }
+                },
+            },
+
+        });
+
 
 
     })

@@ -78,7 +78,7 @@ def portionsandweights():
 @app.route('/descriptioncategory')
 def descriptioncategory():
     sqlStatment = """
-    SELECT d.category_num, n.main_food_description,c.category, d.wweia_category_code, p.wweia_category_description, p.portion_description, p.portion_weight_g, n.energy_kcal, n.protein_g, n.sugars_total_g, n.total_fat_g
+    SELECT d.category_num, n.main_food_description,c.category, d.wweia_category_code, p.wweia_category_description, p.portion_description, p.portion_weight_g, n.energy_kcal, n.protein_g, n.sugars_total_g, n.carbohydrate_g, n.total_fat_g
     FROM nutrientvalue AS n
     INNER JOIN portionsandweights AS p
     ON n.food_code = p.food_code
