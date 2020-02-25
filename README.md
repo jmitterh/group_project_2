@@ -10,7 +10,7 @@ Team of three:
 
 ## Project Description
 
-Our chosen topic shall be food and beverage information provided by the USDA Agricultural Research Service. The food and beverage dashboard shall give the user the option to search any food or beverage to their liking with the nutritional facts and graphical kcal macro and micro information. A comparison page shall be included were you can compare to different food/beverages and visually see the macro/micro nutritional differences. A gauge shall also display how much percentage your daily value is impacted based on the food/beverage and quantity selected (adding macros: carbs, protein, and fat and converting to calories).
+Our chosen topic is food and beverage information provided by the USDA Agricultural Research Service. The food and beverage dashboard shall give the user the option to search any food or beverage to their liking with the nutritional and graphical information. A comparison page shall be included were you can compare to different food/beverages and visually see the macro/micro nutritional differences. A gauge shall also display how much caloric daily value meal is impacted based on the food/beverage and quantity selected.
 
 
 
@@ -19,27 +19,36 @@ Our chosen topic shall be food and beverage information provided by the USDA Agr
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the following:
 
 ```bash
-To be determined
+pip install -r requirements.txt
 ```
 
 ## Folder And File Description
 
-#### Repository folder description:
-1. Initial Proposal - document of chosen topic, and mockup pdf and ppt.
-2. data - excel data from FNDDS source.
+#### Repository folders and main file descrption:
+1. *app.py* - Main file to execute to start web application.
+2. *data/*
+    * *database/* - DB schema, DB_Queries, and text file DB diagram.
+    *  *formatted_data/* - formatted csv data.
+    * *raw_data/* - raw excel files downloaded from FNDDS.
+3. *dataMunging/* - py files to cleanup, and load data to Postgres DB.
+4. *Initial Proposal/* - document of chosen topic, mockup pdf and ppt.
+5. *projRequirements/* - screenshots of requirments for project.
+6. *static/* - .js apps of functionality and visuals. CSS style sheet.
+    * *img/* - images used in mystyle.css.
 
 
-#### Flask is used to connect to our database and create our pages:
-***Flask webpages***
+#### Flask is used to connect to our database and create our webpages:
+***Flask webpages:***
 
-1. Dashboard
-2. Comparison
-3. To be determined
+* *Dashboard*: Consists of the three selections; food name, portion and category. There are seven visualizations.
+* *Comparison*: Consists of four selections; two food name and portion selections. There are eight visualizations 
+* *API Links*: Consist of the API used to grab the data using javascript. There are five API links.
 
-#### Javascript shall run the functionality of our visualizations for project 2:
-***Project 2: /app.js***
+#### Javascript shall run the functionality of our visualizations:
+***Project 2: static/appOne.js and appTwo.js***
 
-* Description shall be added as we learn more about the data.
+* appOne.js - Functionality for the index.html.
+* appTwo.js - Functionality for the comparison.html.
 
 
 ## Sources
@@ -50,6 +59,10 @@ To be determined
  The % Daily Value (%DV) shows how much of a nutrient is in one serving of the food. The %DVs are based on the Daily Values for key nutrients, which are the amounts (in grams, milligrams, or micrograms) of nutrients recommended per day for Americans 4 years of age and older. The %DV column doesn’t add up vertically to 100%. Instead, the %DV is the percentage of the Daily Value for each nutrient in one serving of the food.
 
 ## Considerations
+**Data Restriction**
+Running the app and viewing the webpage initiates the page to fill up with data from the app. The data is considerably large, at about 8,000 records. This would often cause the app to crash, or freeze. We limited the amount of data being pulled from the database to the api, to about 400 records. 
+
+To view the full dataset you must alter the query statement within the app.py, or view the data from the Postgres database.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
