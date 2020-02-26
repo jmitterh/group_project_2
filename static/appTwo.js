@@ -55,7 +55,20 @@ function optionCompareChangedOne(select) {
         // Filter the search
         filterSelect = portions.filter(d => d.food_code == sel);
 
-        // selecting tag
+        // Food name of filtered data
+        var nameOne = filterSelect[0].main_food_description;
+
+        // selecting tag for displaying the name
+        var selectFoodName = document.getElementById("nameOne");
+
+        // Clear html display name
+        selectFoodName.innerHTML = "";
+
+        // Create html tag showing food name
+        selectFoodName.innerHTML = selectFoodName.innerHTML +
+            '<h3>' + nameOne + '</h3>';
+
+        // selecting tag for dropdown
         var select = document.getElementById("selCompareTwo");
 
         //Clear dropdown
@@ -63,11 +76,11 @@ function optionCompareChangedOne(select) {
 
         // For loop for drop down. referencing id and seq_num of portion size
         for (var i = 0; i < filterSelect.length; i++) {
-            if (filterSelect[i].portion_description != 'Quantity not specified') {
-                select.innerHTML = select.innerHTML +
-                    '<option value="' + filterSelect[i].food_code + ',' + filterSelect[i].seq_num + '">' + filterSelect[i].portion_description + '</option>';
-            }
+            select.innerHTML = select.innerHTML +
+                '<option value="' + filterSelect[i].food_code + ',' + filterSelect[i].seq_num + '">' + filterSelect[i].portion_description + '</option>';
+
         }
+
         // default selection
         var defaultPortionID = filterSelect[0].food_code
         var defaultPortionSeq_num = filterSelect[0].seq_num
@@ -98,6 +111,19 @@ function optionCompareChangedTwo(select) {
         // Filter the search
         filterSelect = portions.filter(d => d.food_code == sel);
 
+        // Food name of filtered data
+        var nameTwo = filterSelect[0].main_food_description;
+
+        // selecting tag for displaying the name
+        var selectFoodName = document.getElementById("nameTwo");
+
+        // Clear html display name
+        selectFoodName.innerHTML = "";
+
+        // Create html tag showing food name
+        selectFoodName.innerHTML = selectFoodName.innerHTML +
+            '<h3>' + nameTwo + '</h3>';
+
         // selecting tag
         var select = document.getElementById("selCompareFour");
 
@@ -106,10 +132,8 @@ function optionCompareChangedTwo(select) {
 
         // For loop for drop down. referencing id and seq_num of portion size
         for (var i = 0; i < filterSelect.length; i++) {
-            if (filterSelect[i].portion_description != 'Quantity not specified') {
-                select.innerHTML = select.innerHTML +
-                    '<option value="' + filterSelect[i].food_code + ',' + filterSelect[i].seq_num + '">' + filterSelect[i].portion_description + '</option>';
-            }
+            select.innerHTML = select.innerHTML +
+                '<option value="' + filterSelect[i].food_code + ',' + filterSelect[i].seq_num + '">' + filterSelect[i].portion_description + '</option>';
         }
         // default selection
         var defaultPortionID = filterSelect[0].food_code
@@ -117,7 +141,7 @@ function optionCompareChangedTwo(select) {
 
         // Adding default selection into selection categfory
         optionCompareWeightChangedTwo(defaultPortionID, defaultPortionSeq_num);
-        // GAUGE ONE
+        // GAUGE TWO
         gaugeTwo(defaultPortionID, defaultPortionSeq_num);
 
     });
@@ -660,7 +684,7 @@ function microRadar() {
 };
 
 
-// 4. MACRO GROUPTED BARCHART
+// 4. MACRO GROUPED BARCHART
 function macroGroupBar() {
 
     d3.json("/portionsandweights").then((importData) => {
@@ -788,7 +812,7 @@ function macroGroupBar() {
             options: {
                 title: {
                     display: true,
-                    text: 'Comparision of Nutrient facts'
+                    text: 'Comparision of Macro Nutrients'
                 }
             }
         });
@@ -959,7 +983,7 @@ function microGroupBar() {
             options: {
                 title: {
                     display: true,
-                    text: 'Comparision of Nutrient facts'
+                    text: 'Comparision of Micro Nutrient'
                 }
             }
         });
@@ -1014,8 +1038,10 @@ function gaugeOne(id, select) {
 
         // Variable for kcals
         var kCals = portionSelection.energy_kcal;
+
         // Variable for name
-        var fName = portionSelection.main_food_description
+        var pDescription = portionSelection.portion_description;
+        var pWeight = portionSelection.portion_weight_g;
 
         // data
         var data = [
@@ -1023,7 +1049,7 @@ function gaugeOne(id, select) {
                 type: "indicator",
                 mode: "gauge+number",
                 value: kCals,// change value with washing freq
-                title: { text: `Calories`, font: { size: 18 } },
+                title: { text: `Calories from ${pDescription} or ${pWeight} grams`, font: { size: 18 } },
                 gauge: {
                     axis: { range: [0, 500], tickwidth: 1, tickcolor: "darkblue" },
                     bar: { color: "darkblue" },
@@ -1110,8 +1136,10 @@ function gaugeTwo(id, select) {
 
         // Variable for kcals
         var kCals = portionSelection.energy_kcal;
+
         // Variable for name
-        var fName = portionSelection.main_food_description
+        var pDescription = portionSelection.portion_description;
+        var pWeight = portionSelection.portion_weight_g;
 
         // data
         var data = [
@@ -1119,7 +1147,7 @@ function gaugeTwo(id, select) {
                 type: "indicator",
                 mode: "gauge+number",
                 value: kCals,// change value with washing freq
-                title: { text: `Calories`, font: { size: 18 } },
+                title: { text: `Calories from ${pDescription} or ${pWeight} grams`, font: { size: 18 } },
                 gauge: {
                     axis: { range: [0, 500], tickwidth: 1, tickcolor: "darkblue" },
                     bar: { color: "darkblue" },
@@ -1158,6 +1186,7 @@ function gaugeTwo(id, select) {
 
     })
 };
+
 
 // INITIATE ONCE WEBPAGE STARTS
 selectInit();

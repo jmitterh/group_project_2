@@ -82,6 +82,19 @@ function optionFoodChanged(select) {
         // Filter the search
         filterSelect = portions.filter(d => d.food_code == sel);
 
+        // Food name of filtered data
+        var name = filterSelect[0].main_food_description;
+
+        // selecting tag for displaying the name
+        var selectFoodName = document.getElementById("name");
+
+        // Clear html display name
+        selectFoodName.innerHTML = "";
+
+        // Create html tag showing food name
+        selectFoodName.innerHTML = selectFoodName.innerHTML +
+            '<h3 >' + name + '</h3>';
+
         // selecting tag
         var select = document.getElementById("selDatasetone");
 
@@ -90,8 +103,8 @@ function optionFoodChanged(select) {
 
         // For loop for drop down. referencing id and seq_num of portion size
         for (var i = 0; i < filterSelect.length; i++) {
-                select.innerHTML = select.innerHTML +
-                    '<option value="' + filterSelect[i].food_code + ',' + filterSelect[i].seq_num + '">' + filterSelect[i].portion_description + '</option>';
+            select.innerHTML = select.innerHTML +
+                '<option value="' + filterSelect[i].food_code + ',' + filterSelect[i].seq_num + '">' + filterSelect[i].portion_description + '</option>';
         }
         // default selection
         var defaultPortionID = filterSelect[0].food_code
@@ -417,7 +430,7 @@ function micro_graph(id, select) {
 
         // Sort Object Array in Descending Order by Amount field
         xAll.sort(function (a, b) { return b.amt - a.amt });
-        
+
         // Chart Axis Arrays top 10 Nutirients
         yBar = xAll.slice(0, 10).map(arr => arr.type);
         xBar = xAll.slice(0, 10).map(arr => arr.amt);
@@ -522,8 +535,10 @@ function gauge(id, select) {
 
         // Variable for kcals
         var kCals = portionSelection.energy_kcal;
+
         // Variable for name
-        var fName = portionSelection.main_food_description
+        var pDescription = portionSelection.portion_description
+        var pWeight = portionSelection.portion_weight_g
 
         // data
         var data = [
@@ -531,7 +546,7 @@ function gauge(id, select) {
                 type: "indicator",
                 mode: "gauge+number",
                 value: kCals,// change value with washing freq
-                title: { text: `Calories: ${fName}`, font: { size: 18 } },
+                title: { text: `Calories from ${pDescription} or ${pWeight} grams`, font: { size: 18 } },
                 gauge: {
                     axis: { range: [0, 500], tickwidth: 1, tickcolor: "darkblue" },
                     bar: { color: "darkblue" },
