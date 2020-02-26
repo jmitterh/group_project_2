@@ -61,8 +61,8 @@ def portionsandweights():
     FROM nutrientvalue AS n 
     INNER JOIN portionsandweights AS p
     ON n.food_code = p.food_code
-
     WHERE n.food_code BETWEEN 11000000	AND 13120120
+    AND p.portion_weight_g > 0
     ORDER BY main_food_description
     """
     df = pdsql.read_sql(sqlStatement, engine)

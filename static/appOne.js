@@ -90,10 +90,8 @@ function optionFoodChanged(select) {
 
         // For loop for drop down. referencing id and seq_num of portion size
         for (var i = 0; i < filterSelect.length; i++) {
-            if (filterSelect[i].portion_description != 'Quantity not specified') {
                 select.innerHTML = select.innerHTML +
                     '<option value="' + filterSelect[i].food_code + ',' + filterSelect[i].seq_num + '">' + filterSelect[i].portion_description + '</option>';
-            }
         }
         // default selection
         var defaultPortionID = filterSelect[0].food_code
@@ -135,6 +133,12 @@ function optionScatterChanged(select) {
 ////////////////////////////////////////////////////////
 ///////////////GRAPH FUNCTION DEFINITIONS///////////////
 ////////////////////////////////////////////////////////
+
+// Chart.js requires a defined a variable to store the chart instance 
+// (this must be outside of your function)
+// This is to clear the visuals from chart.js
+var myMacroRadar;
+var myMicroRadar;
 
 
 // 1. NUTRIENT FACT TABLE
@@ -275,11 +279,15 @@ function macro_graph(id, select) {
         });
 
         // Sort Object Array in Descending Order by Amount field
-        xAll.sort(function (a, b) { return a.amt - b.amt });
+        xAll.sort(function (a, b) { return b.amt - a.amt });
 
         // Chart Axis Arrays
         yBar = xAll.map(arr => arr.type);
         xBar = xAll.map(arr => arr.amt);
+
+        // Reversing data 
+        yBar.reverse();
+        xBar.reverse();
 
         // Trace is for the Bar graph data
         var trace = {
@@ -408,11 +416,16 @@ function micro_graph(id, select) {
         });
 
         // Sort Object Array in Descending Order by Amount field
-        xAll.sort(function (a, b) { return a.amt - b.amt });
-
+        xAll.sort(function (a, b) { return b.amt - a.amt });
+        
         // Chart Axis Arrays top 10 Nutirients
-        yBar = xAll.slice(10, 19).map(arr => arr.type);
-        xBar = xAll.slice(10, 19).map(arr => arr.amt);
+        yBar = xAll.slice(0, 10).map(arr => arr.type);
+        xBar = xAll.slice(0, 10).map(arr => arr.amt);
+
+        //Reversing data
+        xBar.reverse();
+        yBar.reverse();
+
 
         // Trace is for the Bar graph data
         var trace = {
@@ -727,7 +740,7 @@ function macroRadar(id, select) {
         data = []
         for (i in portionSelection) {
             if (i == 'total_fat_g' || i == 'fatty_acids_total_saturated_g' || i == 'fatty_acids_total_monounsaturated_g' || i == 'fatty_acids_total_polyunsaturated_g' || i == 'protein_g' || i == 'carbohydrate_g' || i == 'sugars_total_g' || i == 'fiber_total_dietary_g') {
-                var n = i.replace(/_g/g,"")
+                var n = i.replace(/_g/g, "")
                 var newI = n.replace(/_/g, " ")
                 var num = parseFloat(portionSelection[i]).toFixed(2)
                 labels.push(newI);
@@ -738,7 +751,11 @@ function macroRadar(id, select) {
         // selecting tag
         var select = document.getElementById("marco-radar");
 
-        var myRadarChart = new Chart(select, {
+        if (myMacroRadar) {
+            myMacroRadar.destroy();
+        }
+
+        myMacroRadar = new Chart(select, {
             type: 'radar',
             data: {
                 labels: labels,
@@ -854,7 +871,11 @@ function microRadar(id, select) {
         // selecting tag
         var select = document.getElementById("micro-radar");
 
-        var myRadarChart = new Chart(select, {
+        if (myMicroRadar) {
+            myMicroRadar.destroy();
+        }
+
+        myMicroRadar = new Chart(select, {
             type: 'radar',
             data: {
                 labels: labels,

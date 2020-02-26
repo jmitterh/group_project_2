@@ -27,8 +27,8 @@ function selectInit() {
         }
 
         // default selection
-        var defualtFoodNameOne = names[0].food_code
-        var defualtFoodNameTwo = names[0].food_code
+        var defualtFoodNameOne = names[0].food_code;
+        var defualtFoodNameTwo = names[0].food_code;
 
         // adding dropdown for default selection quantity
         optionCompareChangedOne(defualtFoodNameOne);
@@ -168,6 +168,14 @@ function optionCompareWeightChangedTwo(id, select) {
 ////////////////////////////////////////////////////////
 ///////////////GRAPH FUNCTION DEFINITIONS///////////////
 ////////////////////////////////////////////////////////
+
+// Chart.js requires a defined a variable to store the chart instance 
+// (this must be outside of your function)
+// This is to clear the visuals from chart.js
+var myMacroRadar;
+var myMicroRadar;
+var myMacroChart;
+var myMicroChart;
 
 
 // 1.1 NUTRIENT FACT TABLE
@@ -410,7 +418,13 @@ function macroRadar() {
         // selecting tag
         var select = document.getElementById("macro-radar");
 
-        var myRadarChart = new Chart(select, {
+        // if the chart is not undefined (e.g. it has been created)
+        // then destory the old one so we can create a new one later
+        if (myMacroRadar) {
+            myMacroRadar.destroy();
+        }
+
+        myMacroRadar = new Chart(select, {
             type: 'radar',
             data: {
                 labels: labelsOne,
@@ -593,7 +607,13 @@ function microRadar() {
         // selecting tag
         var select = document.getElementById("micro-radar");
 
-        var myRadarChart = new Chart(select, {
+        // if the chart is not undefined (e.g. it has been created)
+        // then destory the old one so we can create a new one later
+        if (myMicroRadar) {
+            myMicroRadar.destroy();
+        }
+
+        myMicroRadar = new Chart(select, {
             type: 'radar',
             data: {
                 labels: labelsOne,
@@ -742,8 +762,14 @@ function macroGroupBar() {
         // selecting tag
         var select = document.getElementById("macro-bar-chart-grouped");
 
+        // if the chart is not undefined (e.g. it has been created)
+        // then destory the old one so we can create a new one later
+        if (myMacroChart) {
+            myMacroChart.destroy();
+        }
+
         //Grouped bar chart
-        new Chart(select, {
+        myMacroChart = new Chart(select, {
             type: 'bar',
             data: {
                 labels: labelsOne,
@@ -754,7 +780,7 @@ function macroGroupBar() {
                         data: dataOne
                     }, {
                         label: `${foodNameTwo}`,
-                        backgroundColor: "rgba(255, 99, 132, 1.0)",
+                        backgroundColor: "rgb(34,139,34,1.0)",
                         data: dataTwo
                     }
                 ]
@@ -907,8 +933,14 @@ function microGroupBar() {
         // selecting tag
         var select = document.getElementById("micro-bar-chart-grouped");
 
+        // if the chart is not undefined (e.g. it has been created)
+        // then destory the old one so we can create a new one later
+        if (myMicroChart) {
+            myMicroChart.destroy();
+        }
+
         //Grouped bar chart
-        new Chart(select, {
+        myMicroChart = new Chart(select, {
             type: 'bar',
             data: {
                 labels: labelsOne,
@@ -919,7 +951,7 @@ function microGroupBar() {
                         data: dataOne
                     }, {
                         label: `${foodNameTwo}`,
-                        backgroundColor: "rgba(255, 99, 132, 1.0)",
+                        backgroundColor: "rgb(34,139,34,1.0)",
                         data: dataTwo
                     }
                 ]
