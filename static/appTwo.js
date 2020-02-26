@@ -1084,7 +1084,7 @@ function gaugeOne(id, select) {
             font: { color: "darkblue", family: "Arial" }
         };
         // Render the plot to the div tag with id "gauge"
-        Plotly.newPlot(select, data, layout);
+        Plotly.newPlot(select, data, layout, {displayModeBar: false});
 
     })
 };
@@ -1182,7 +1182,7 @@ function gaugeTwo(id, select) {
             font: { color: "darkblue", family: "Arial" }
         };
         // Render the plot to the div tag with id "gauge"
-        Plotly.newPlot(select, data, layout);
+        Plotly.newPlot(select, data, layout, {displayModeBar: false});
 
     })
 };

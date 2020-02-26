@@ -341,7 +341,7 @@ function macro_graph(id, select) {
             height: 400
         };
         // Render the plot to the div tag with id "bar"
-        Plotly.newPlot(select, data, layout);
+        Plotly.newPlot(select, data, layout, {displayModeBar: false});
 
         //******************************** */
 
@@ -480,7 +480,7 @@ function micro_graph(id, select) {
         };
 
         // Render the plot to the div tag with id "bar"
-        Plotly.newPlot("bar-micro", data, layout);
+        Plotly.newPlot("bar-micro", data, layout, {displayModeBar: false});
 
         //****************************** */
     })
@@ -581,7 +581,7 @@ function gauge(id, select) {
             font: { color: "darkblue", family: "Arial" }
         };
         // Render the plot to the div tag with id "gauge"
-        Plotly.newPlot(select, data, layout);
+        Plotly.newPlot(select, data, layout, {displayModeBar: false});
 
     })
 };
@@ -698,7 +698,7 @@ function scatter(select) {
         };
 
         // Render the plot to the div tag with id "bubble"
-        Plotly.newPlot(select, data, layout)
+        Plotly.newPlot(select, data, layout, {displayModeBar: false})
 
     })
 };
