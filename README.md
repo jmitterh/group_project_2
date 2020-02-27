@@ -41,7 +41,7 @@ pip install -r requirements.txt
     * *raw_data/* - raw excel files downloaded from FNDDS.
 3. *dataMunging/* - py files to cleanup, and load data to Postgres DB.
 4. *Initial Proposal/* - document of chosen topic, mockup pdf and ppt.
-5. *projRequirements/* - screenshots of requirments for project.
+5. *projRequirements/* - screenshots of requirments for the project, and our presentation slides.
 6. *static/* - .js apps of functionality and visuals. CSS style sheet.
     * *img/* - images used in mystyle.css.
 
