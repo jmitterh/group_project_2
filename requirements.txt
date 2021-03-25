@@ -44,7 +44,7 @@ python-resources==0.3
 pytz==2019.2
 pywin32==225
 pywinpty==0.5.5
-PyYAML==5.2
+PyYAML==5.4
 pyzmq==18.1.0
 query-string==2019.4.13
 request==2019.4.13
