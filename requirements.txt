@@ -23,7 +23,7 @@ post==2019.4.13
 pprint==0.1
 prometheus-client==0.7.1
 prompt-toolkit==1.0.18
-protobuf==3.10.0rc1
+protobuf==3.18.3
 psycopg2==2.8.4
 public==2019.4.13
 py==1.8.0
